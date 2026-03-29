@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChefDrop — Assistance / Support</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #e5e5e5; line-height: 1.7; }
+    .container { max-width: 720px; margin: 0 auto; padding: 60px 24px; }
+    .logo { font-size: 28px; font-weight: 700; color: #C8920D; margin-bottom: 8px; }
+    .lang-switch { display: flex; gap: 12px; margin-bottom: 48px; margin-top: 16px; }
+    .lang-btn { padding: 6px 16px; border-radius: 20px; border: 1px solid #333; background: transparent; color: #888; cursor: pointer; font-size: 13px; }
+    .lang-btn.active { background: #C8920D; color: #000; border-color: #C8920D; font-weight: 600; }
+    .section { display: none; }
+    .section.active { display: block; }
+    h1 { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .subtitle { font-size: 16px; color: #888; margin-bottom: 40px; }
+    h2 { font-size: 17px; font-weight: 600; color: #C8920D; margin: 32px 0 12px; }
+    p { font-size: 15px; color: #ccc; margin-bottom: 12px; }
+    ul { padding-left: 20px; margin-bottom: 12px; }
+    li { font-size: 15px; color: #ccc; margin-bottom: 6px; }
+    .faq-item { background: #141414; border: 1px solid #222; border-radius: 12px; padding: 20px; margin-bottom: 12px; }
+    .faq-q { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 8px; }
+    .faq-a { font-size: 14px; color: #aaa; }
+    .contact-box { background: #141414; border: 1px solid #C8920D33; border-radius: 12px; padding: 24px; margin-top: 40px; text-align: center; }
+    .contact-box h2 { margin-top: 0; }
+    .contact-btn { display: inline-block; margin-top: 16px; padding: 12px 28px; background: #C8920D; color: #000; border-radius: 24px; font-weight: 600; font-size: 15px; text-decoration: none; }
+    .footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid #222; font-size: 13px; color: #555; }
+    a { color: #C8920D; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">ChefDrop</div>
+ 
+    <div class="lang-switch">
+      <button class="lang-btn active" onclick="switchLang('fr', this)">Français</button>
+      <button class="lang-btn" onclick="switchLang('en', this)">English</button>
+    </div>
+ 
+    <!-- FRANÇAIS -->
+    <div class="section active" id="fr">
+      <h1>Assistance</h1>
+      <p class="subtitle">Bienvenue sur la page d'assistance de ChefDrop. Consultez les questions fréquentes ou contactez-nous directement.</p>
+ 
+      <h2>Questions fréquentes</h2>
+ 
+      <div class="faq-item">
+        <div class="faq-q">Comment importer une recette ?</div>
+        <div class="faq-a">Demandez une recette à votre IA préférée (ChatGPT, Gemini, etc.), copiez la réponse complète, ouvrez ChefDrop et appuyez sur "Importer". Collez le texte et appuyez sur "Convertir en recette".</div>
+      </div>
+ 
+      <div class="faq-item">
+        <div class="faq-q">Mes crédits ont disparu, que faire ?</div>
+        <div class="faq-a">Les crédits sont liés à votre appareil. Si vous réinstallez l'app, les crédits achetés via l'App Store ne peuvent pas être restaurés car ce sont des achats consommables — c'est le comportement standard d'Apple.</div>
+      </div>
+ 
+      <div class="faq-item">
+        <div class="faq-q">L'image de ma recette ne s'affiche pas.</div>
+        <div class="faq-a">Vérifiez votre connexion internet. Si le problème persiste, supprimez et réimportez la recette pour générer une nouvelle image.</div>
+      </div>
+ 
+      <div class="faq-item">
+        <div class="faq-q">Puis-je utiliser ChefDrop sur iPhone et iPad ?</div>
+        <div class="faq-a">Oui ! ChefDrop est compatible iPhone et iPad. Vos recettes se synchronisent automatiquement via iCloud entre vos appareils Apple.</div>
+      </div>
+ 
+      <div class="faq-item">
+        <div class="faq-q">Les macros sont-elles exactes ?</div>
+        <div class="faq-a">Les macros sont générées par intelligence artificielle à partir du texte de votre recette. Elles sont approximatives — consultez un professionnel de la santé pour des besoins nutritionnels précis.</div>
+      </div>
+ 
+      <div class="faq-item">
+        <div class="faq-q">Comment ajuster les portions ?</div>
+        <div class="faq-a">Dans la page détail d'une recette, utilisez le bouton + ou — à côté de "Nombre de portions". Les ingrédients et étapes s'ajustent automatiquement.</div>
+      </div>
+ 
+      <div class="contact-box">
+        <h2>Vous avez une autre question ?</h2>
+        <p>Notre équipe vous répond dans les 24-48 heures.</p>
+        <a href="mailto:support@chefdrop.app" class="contact-btn">Nous contacter</a>
+      </div>
+    </div>
+ 
+    <!-- ENGLISH -->
+    <div class="section" id="en">
+      <h1>Support</h1>
+      <p class="subtitle">Welcome to ChefDrop's support page. Check the FAQ or contact us directly.</p>
+ 
+      <h2>Frequently Asked Questions</h2>
+ 
+      <div class="faq-item">
+        <div class="faq-q">How do I import a recipe?</div>
+        <div class="faq-a">Ask your favorite AI (ChatGPT, Gemini, etc.) for a recipe, copy the full response, open ChefDrop and tap "Import". Paste the text and tap "Convert to Recipe".</div>
+      </div>
+ 
+      <div class="faq-item">
+        <div class="faq-q">My credits disappeared, what should I do?</div>
+        <div class="faq-a">Credits are tied to your device. If you reinstall the app, purchased credits cannot be restored as they are consumable purchases — this is standard Apple behavior.</div>
+      </div>
+ 
+      <div class="faq-item">
+        <div class="faq-q">My recipe image isn't loading.</div>
+        <div class="faq-a">Check your internet connection. If the problem persists, delete and re-import the recipe to generate a new image.</div>
+      </div>
+ 
+      <div class="faq-item">
+        <div class="faq-q">Can I use ChefDrop on iPhone and iPad?</div>
+        <div class="faq-a">Yes! ChefDrop is compatible with iPhone and iPad. Your recipes automatically sync via iCloud across your Apple devices.</div>
+      </div>
+ 
+      <div class="faq-item">
+        <div class="faq-q">Are the macros accurate?</div>
+        <div class="faq-a">Macros are generated by AI based on your recipe text. They are approximate — consult a healthcare professional for precise nutritional needs.</div>
+      </div>
+ 
+      <div class="faq-item">
+        <div class="faq-q">How do I adjust servings?</div>
+        <div class="faq-a">On the recipe detail page, use the + or — button next to "Servings". Ingredients and steps adjust automatically.</div>
+      </div>
+ 
+      <div class="contact-box">
+        <h2>Have another question?</h2>
+        <p>Our team responds within 24-48 hours.</p>
+        <a href="mailto:support@chefdrop.app" class="contact-btn">Contact Us</a>
+      </div>
+    </div>
+ 
+    <div class="footer">© 2025 ChefDrop. Tous droits réservés / All rights reserved.</div>
+  </div>
+ 
+  <script>
+    function switchLang(lang, btn) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(lang).classList.add('active');
+      btn.classList.add('active');
+    }
+  </script>
+</body>
+</html>
+ 
