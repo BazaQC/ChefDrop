@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChefDrop — Your AI Recipe Book</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold: #D4A843;
+      --gold-light: #F0C96A;
+      --dark: #0E0D0B;
+      --dark2: #1A1814;
+      --dark3: #252219;
+      --text: #F5F0E8;
+      --muted: #9A9080;
+      --radius: 20px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(14,13,11,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(212,168,67,0.15);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .nav-right { display: flex; align-items: center; gap: 14px; }
+    .lang-toggle {
+      display: flex;
+      background: var(--dark3);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 50px;
+      overflow: hidden;
+    }
+    .lang-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      padding: 7px 14px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .lang-btn.active { background: var(--gold); color: var(--dark); }
+    .nav-cta {
+      background: var(--gold);
+      color: var(--dark);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.85rem;
+      padding: 10px 22px;
+      border-radius: 50px;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; left: 50%; transform: translateX(-50%);
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(212,168,67,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-block;
+      border: 1px solid rgba(212,168,67,0.4);
+      color: var(--gold);
+      font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 50px;
+      margin-bottom: 32px;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 900; line-height: 1.05;
+      margin-bottom: 24px;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+    .hero h1 span { color: var(--gold); }
+    .hero p {
+      max-width: 520px;
+      font-size: clamp(1rem, 2.5vw, 1.15rem);
+      color: var(--muted); line-height: 1.7;
+      margin-bottom: 44px;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+    .hero-buttons {
+      display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+    .btn-primary {
+      background: var(--gold); color: var(--dark);
+      font-weight: 500; font-size: 0.95rem;
+      padding: 14px 32px; border-radius: 50px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-secondary {
+      background: transparent; color: var(--text);
+      font-size: 0.95rem; padding: 14px 32px;
+      border-radius: 50px; border: 1px solid rgba(255,255,255,0.15);
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--gold); transform: translateY(-2px); }
+
+    /* PHONES */
+    .hero-screenshot { margin-top: 70px; animation: fadeUp 0.8s 0.4s ease both; }
+    .phone-wrap { display: flex; gap: 20px; align-items: flex-end; justify-content: center; }
+    .phone {
+      border-radius: 40px; overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.06);
+      transition: transform 0.4s ease;
+    }
+    .phone:hover { transform: translateY(-8px); }
+    .phone img { width: 200px; display: block; }
+    .phone.center img { width: 230px; }
+    .phone.side { opacity: 0.7; }
+    .phone-placeholder {
+      width: 200px; height: 380px;
+      background: var(--dark3); border-radius: 40px;
+      border: 1px dashed rgba(212,168,67,0.3);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 8px; color: var(--muted);
+      font-size: 0.72rem; text-align: center; padding: 20px;
+    }
+    .phone-placeholder.center { width: 230px; height: 430px; }
+
+    /* SECTIONS */
+    section { padding: 100px 24px; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700; line-height: 1.15; margin-bottom: 20px;
+    }
+    .section-sub { color: var(--muted); font-size: 1.05rem; line-height: 1.7; max-width: 500px; }
+
+    /* HOW */
+    .how { background: var(--dark2); }
+    .steps {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 32px; margin-top: 60px;
+    }
+    .step {
+      background: var(--dark3); border-radius: var(--radius);
+      padding: 36px 28px; border: 1px solid rgba(255,255,255,0.05);
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .step:hover { transform: translateY(-4px); border-color: rgba(212,168,67,0.25); }
+    .step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem; font-weight: 900;
+      color: rgba(212,168,67,0.15); line-height: 1; margin-bottom: 16px;
+    }
+    .step h3 { font-size: 1.05rem; font-weight: 500; margin-bottom: 10px; }
+    .step p { color: var(--muted); font-size: 0.9rem; line-height: 1.65; }
+
+    /* FEATURES */
+    .features-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px 80px; margin-top: 60px; align-items: center;
+    }
+    .features-list { display: flex; flex-direction: column; gap: 28px; }
+    .feature-item { display: flex; gap: 18px; align-items: flex-start; }
+    .feature-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: rgba(212,168,67,0.1); border: 1px solid rgba(212,168,67,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .feature-item h4 { font-size: 0.95rem; font-weight: 500; margin-bottom: 4px; }
+    .feature-item p { color: var(--muted); font-size: 0.875rem; line-height: 1.6; }
+    .features-screenshot {
+      border-radius: var(--radius); overflow: hidden;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .features-screenshot img { width: 100%; display: block; }
+    .screenshot-placeholder {
+      width: 100%; aspect-ratio: 9/16; max-height: 500px;
+      background: var(--dark3); border: 1px dashed rgba(212,168,67,0.3);
+      border-radius: var(--radius);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 10px; color: var(--muted); font-size: 0.8rem; text-align: center;
+    }
+
+    /* GALLERY */
+    .gallery { background: var(--dark2); }
+    .gallery-row {
+      display: flex; gap: 20px; overflow-x: auto;
+      padding: 40px 0 20px; scrollbar-width: none;
+    }
+    .gallery-row::-webkit-scrollbar { display: none; }
+    .gallery-item {
+      flex-shrink: 0; width: 220px; border-radius: 32px; overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: transform 0.3s;
+    }
+    .gallery-item:hover { transform: scale(1.03); }
+    .gallery-item img { width: 100%; display: block; }
+    .gallery-placeholder {
+      width: 220px; height: 400px;
+      background: var(--dark3); border: 1px dashed rgba(212,168,67,0.25);
+      border-radius: 32px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      color: var(--muted); font-size: 0.75rem;
+      gap: 8px; flex-shrink: 0; text-align: center; padding: 16px;
+    }
+
+    /* PRICING */
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px; margin-top: 60px;
+    }
+    .plan {
+      background: var(--dark3); border-radius: var(--radius);
+      padding: 36px 28px; border: 1px solid rgba(255,255,255,0.06);
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .plan:hover { transform: translateY(-4px); }
+    .plan.featured {
+      border-color: var(--gold);
+      background: linear-gradient(135deg, rgba(212,168,67,0.08), var(--dark3));
+      position: relative;
+    }
+    .plan-badge {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: var(--gold); color: var(--dark);
+      font-size: 0.7rem; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 4px 14px; border-radius: 50px; white-space: nowrap;
+    }
+    .plan-name { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+    .plan-credits { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 4px; }
+    .plan-credits span { font-size: 1rem; font-weight: 400; color: var(--muted); font-family: 'DM Sans', sans-serif; }
+    .plan-price { color: var(--gold); font-size: 1.1rem; font-weight: 500; margin-bottom: 24px; }
+    .plan-features { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .plan-features li { font-size: 0.875rem; color: var(--muted); display: flex; gap: 8px; align-items: center; }
+    .plan-features li::before { content: '✓'; color: var(--gold); font-size: 0.8rem; }
+
+    /* CTA */
+    .cta-section {
+      text-align: center;
+      background: linear-gradient(180deg, var(--dark) 0%, var(--dark2) 100%);
+      position: relative; overflow: hidden;
+    }
+    .cta-section::before {
+      content: ''; position: absolute;
+      bottom: -100px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse, rgba(212,168,67,0.1) 0%, transparent 70%);
+    }
+    .cta-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900; margin-bottom: 20px;
+    }
+    .cta-section p { color: var(--muted); font-size: 1rem; margin-bottom: 40px; }
+    .app-store-btn {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: var(--text); color: var(--dark);
+      padding: 14px 28px; border-radius: 16px;
+      text-decoration: none; font-weight: 500; font-size: 0.9rem;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .app-store-btn:hover { transform: translateY(-2px); opacity: 0.92; }
+    .app-store-btn svg { width: 24px; height: 24px; }
+
+    /* FOOTER */
+    footer {
+      padding: 40px 24px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      text-align: center; color: var(--muted); font-size: 0.8rem;
+    }
+    footer a { color: var(--muted); text-decoration: none; margin: 0 10px; }
+    footer a:hover { color: var(--gold); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 14px 16px; gap: 8px; }
+      .nav-right { gap: 8px; }
+      .lang-btn { padding: 6px 10px; }
+      .nav-cta { padding: 8px 14px; font-size: 0.8rem; }
+      .features-grid { grid-template-columns: 1fr; }
+      .features-screenshot, .screenshot-placeholder { order: -1; }
+      .phone.side { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">ChefDrop</a>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')" id="btn-en">EN</button>
+      <button class="lang-btn" onclick="setLang('fr')" id="btn-fr">FR</button>
+    </div>
+    <a href="#download" class="nav-cta" data-en="Download Free" data-fr="Télécharger">Download Free</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge" data-en="Available on the App Store" data-fr="Disponible sur l'App Store">Available on the App Store</div>
+  <h1 data-en="Your AI recipes,<br/><span>finally organized.</span>" data-fr="Tes recettes IA,<br/><span>enfin organisées.</span>">Your AI recipes,<br/><span>finally organized.</span></h1>
+  <p data-en="Paste any recipe from ChatGPT, Claude, or any AI — ChefDrop structures it, calculates your macros, and keeps your cookbook beautiful." data-fr="Colle n'importe quelle recette de ChatGPT, Claude ou tout autre IA — ChefDrop la structure, calcule tes macros et garde ton livre de cuisine impeccable.">Paste any recipe from ChatGPT, Claude, or any AI — ChefDrop structures it, calculates your macros, and keeps your cookbook beautiful.</p>
+  <div class="hero-buttons">
+    <a href="#download" class="btn-primary" data-en="Download Free" data-fr="Télécharger gratuitement">Download Free</a>
+    <a href="#features" class="btn-secondary" data-en="See how it works" data-fr="Voir comment ça marche">See how it works</a>
+  </div>
+  <div class="hero-screenshot">
+    <div class="phone-wrap">
+      <!-- SCREENSHOT_HERO_LEFT : liste All Recipes -->
+      <div class="phone side">
+        <div class="phone-placeholder">📱<br/><strong>SCREENSHOT_HERO_LEFT</strong><br/>All Recipes list</div>
+      </div>
+      <!-- SCREENSHOT_HERO_CENTER : détail recette + macros -->
+      <div class="phone center">
+        <div class="phone-placeholder center">📱<br/><strong>SCREENSHOT_HERO_CENTER</strong><br/>Recipe detail + macros</div>
+      </div>
+      <!-- SCREENSHOT_HERO_RIGHT : filtres -->
+      <div class="phone side">
+        <div class="phone-placeholder">📱<br/><strong>SCREENSHOT_HERO_RIGHT</strong><br/>Filters screen</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="container">
+    <p class="section-label" data-en="How it works" data-fr="Comment ça marche">How it works</p>
+    <h2 class="section-title" data-en="Three steps.<br/>Zero hassle." data-fr="Trois étapes.<br/>Zéro friction.">Three steps.<br/>Zero hassle.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3 data-en="Copy your AI conversation" data-fr="Copie ta conversation IA">Copy your AI conversation</h3>
+        <p data-en="Ask any AI for a recipe and copy the response. ChatGPT, Claude, Gemini — it all works." data-fr="Demande une recette à n'importe quelle IA et copie la réponse. ChatGPT, Claude, Gemini — tout fonctionne.">Ask any AI for a recipe and copy the response. ChatGPT, Claude, Gemini — it all works.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3 data-en="Paste into ChefDrop" data-fr="Colle dans ChefDrop">Paste into ChefDrop</h3>
+        <p data-en="The app automatically detects ingredients, steps, serving sizes, and nutritional info." data-fr="L'app détecte automatiquement les ingrédients, les étapes, les portions et les infos nutritionnelles.">The app automatically detects ingredients, steps, serving sizes, and nutritional info.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3 data-en="Cook, track, repeat" data-fr="Cuisine, suis, répète">Cook, track, repeat</h3>
+        <p data-en="Your recipe is structured, illustrated, and saved — ready whenever you need it." data-fr="Ta recette est structurée, illustrée et sauvegardée — prête quand tu en as besoin.">Your recipe is structured, illustrated, and saved — ready whenever you need it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="container">
+    <div class="features-grid">
+      <div class="features-list">
+        <div>
+          <p class="section-label" data-en="Features" data-fr="Fonctionnalités">Features</p>
+          <h2 class="section-title" data-en="Everything your<br/>cookbook needs." data-fr="Tout ce dont ton<br/>livre de cuisine a besoin.">Everything your<br/>cookbook needs.</h2>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🔢</div>
+          <div>
+            <h4 data-en="Macros per serving" data-fr="Macros par portion">Macros per serving</h4>
+            <p data-en="Calories, protein, carbs, and fat calculated automatically for every recipe." data-fr="Calories, protéines, glucides et lipides calculés automatiquement pour chaque recette.">Calories, protein, carbs, and fat calculated automatically for every recipe.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">⚖️</div>
+          <div>
+            <h4 data-en="Adjustable servings" data-fr="Portions ajustables">Adjustable servings</h4>
+            <p data-en="Scale any recipe up or down — all ingredient quantities update instantly." data-fr="Ajuste n'importe quelle recette à la hausse ou à la baisse — les quantités se mettent à jour instantanément.">Scale any recipe up or down — all ingredient quantities update instantly.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🖼️</div>
+          <div>
+            <h4 data-en="Auto-generated photo" data-fr="Photo générée automatiquement">Auto-generated photo</h4>
+            <p data-en="Each recipe gets a beautiful AI-generated image so your cookbook looks stunning." data-fr="Chaque recette reçoit une belle image générée par IA pour un livre de cuisine impeccable.">Each recipe gets a beautiful AI-generated image so your cookbook looks stunning.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🔍</div>
+          <div>
+            <h4 data-en="Smart filters" data-fr="Filtres intelligents">Smart filters</h4>
+            <p data-en="Browse by protein type, meal category, favorites, or your to-try list." data-fr="Navigue par type de protéine, catégorie de repas, favoris ou liste à essayer.">Browse by protein type, meal category, favorites, or your to-try list.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">☁️</div>
+          <div>
+            <h4 data-en="iCloud sync" data-fr="Synchronisation iCloud">iCloud sync</h4>
+            <p data-en="Your recipes are available on all your Apple devices automatically." data-fr="Tes recettes sont disponibles sur tous tes appareils Apple automatiquement.">Your recipes are available on all your Apple devices automatically.</p>
+          </div>
+        </div>
+      </div>
+      <!-- SCREENSHOT_FEATURES : détail recette avec photo + macros -->
+      <div class="features-screenshot">
+        <div class="screenshot-placeholder">
+          📱<br/><strong>SCREENSHOT_FEATURES</strong><br/>Recipe detail<br/>(photo + macros visible)
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="container">
+    <p class="section-label" data-en="App screenshots" data-fr="Captures d'écran">App screenshots</p>
+    <h2 class="section-title" data-en="Built for how<br/>you actually cook." data-fr="Conçu pour ta<br/>vraie façon de cuisiner.">Built for how<br/>you actually cook.</h2>
+    <div class="gallery-row">
+      <div class="gallery-item"><div class="gallery-placeholder">📱<br/><strong>SCREENSHOT_1</strong><br/>Recipe detail</div></div>
+      <div class="gallery-item"><div class="gallery-placeholder">📱<br/><strong>SCREENSHOT_2</strong><br/>All Recipes</div></div>
+      <div class="gallery-item"><div class="gallery-placeholder">📱<br/><strong>SCREENSHOT_3</strong><br/>Import screen</div></div>
+      <div class="gallery-item"><div class="gallery-placeholder">📱<br/><strong>SCREENSHOT_4</strong><br/>Filters</div></div>
+      <div class="gallery-item"><div class="gallery-placeholder">📱<br/><strong>SCREENSHOT_5</strong><br/>Favorites</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="container">
+    <p class="section-label" data-en="Pricing" data-fr="Tarifs">Pricing</p>
+    <h2 class="section-title" data-en="Start free.<br/>Pay only when you need more." data-fr="Commence gratuitement.<br/>Paie seulement si tu en veux plus.">Start free.<br/>Pay only when you need more.</h2>
+    <p class="section-sub" data-en="No subscription. No monthly fees. Buy credits once and use them whenever you want." data-fr="Aucun abonnement. Aucuns frais mensuels. Achète des crédits une fois et utilise-les quand tu veux.">No subscription. No monthly fees. Buy credits once and use them whenever you want.</p>
+    <div class="pricing-grid">
+      <div class="plan">
+        <p class="plan-name" data-en="Free" data-fr="Gratuit">Free</p>
+        <p class="plan-credits">5 <span data-en="credits" data-fr="crédits">credits</span></p>
+        <p class="plan-price" data-en="On install" data-fr="À l'installation">On install</p>
+        <ul class="plan-features">
+          <li data-en="5 recipe imports" data-fr="5 importations de recettes">5 recipe imports</li>
+          <li data-en="Full macro tracking" data-fr="Suivi complet des macros">Full macro tracking</li>
+          <li data-en="iCloud sync" data-fr="Synchronisation iCloud">iCloud sync</li>
+          <li data-en="All filters &amp; categories" data-fr="Tous les filtres et catégories">All filters &amp; categories</li>
+        </ul>
+      </div>
+      <div class="plan">
+        <p class="plan-name">Starter</p>
+        <p class="plan-credits">30 <span data-en="credits" data-fr="crédits">credits</span></p>
+        <p class="plan-price">2,99 $ CAD</p>
+        <ul class="plan-features">
+          <li data-en="30 recipe imports" data-fr="30 importations de recettes">30 recipe imports</li>
+          <li data-en="Full macro tracking" data-fr="Suivi complet des macros">Full macro tracking</li>
+          <li data-en="iCloud sync" data-fr="Synchronisation iCloud">iCloud sync</li>
+          <li data-en="All filters &amp; categories" data-fr="Tous les filtres et catégories">All filters &amp; categories</li>
+        </ul>
+      </div>
+      <div class="plan featured">
+        <div class="plan-badge" data-en="Most Popular" data-fr="Le plus populaire">Most Popular</div>
+        <p class="plan-name">Chef</p>
+        <p class="plan-credits">120 <span data-en="credits" data-fr="crédits">credits</span></p>
+        <p class="plan-price">5,99 $ CAD</p>
+        <ul class="plan-features">
+          <li data-en="120 recipe imports" data-fr="120 importations de recettes">120 recipe imports</li>
+          <li data-en="Full macro tracking" data-fr="Suivi complet des macros">Full macro tracking</li>
+          <li data-en="iCloud sync" data-fr="Synchronisation iCloud">iCloud sync</li>
+          <li data-en="All filters &amp; categories" data-fr="Tous les filtres et catégories">All filters &amp; categories</li>
+        </ul>
+      </div>
+      <div class="plan">
+        <p class="plan-name">Pro</p>
+        <p class="plan-credits">300 <span data-en="credits" data-fr="crédits">credits</span></p>
+        <p class="plan-price">9,99 $ CAD</p>
+        <ul class="plan-features">
+          <li data-en="300 recipe imports" data-fr="300 importations de recettes">300 recipe imports</li>
+          <li data-en="Full macro tracking" data-fr="Suivi complet des macros">Full macro tracking</li>
+          <li data-en="iCloud sync" data-fr="Synchronisation iCloud">iCloud sync</li>
+          <li data-en="All filters &amp; categories" data-fr="Tous les filtres et catégories">All filters &amp; categories</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="download">
+  <div class="container">
+    <h2 data-en="Ready to cook smarter?" data-fr="Prêt à cuisiner plus intelligemment ?">Ready to cook smarter?</h2>
+    <p data-en="Download ChefDrop free. Your first 5 recipes are on us." data-fr="Télécharge ChefDrop gratuitement. Tes 5 premières recettes sont offertes.">Download ChefDrop free. Your first 5 recipes are on us.</p>
+    <!-- Remplace le href par ton lien App Store -->
+    <a href="https://apps.apple.com" class="app-store-btn" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      <span data-en="Download on the App Store" data-fr="Télécharger sur l'App Store">Download on the App Store</span>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>
+    <a href="https://bazaqc.github.io/ChefDrop/support.html" data-en="Support" data-fr="Support">Support</a>
+    <a href="https://bazaqc.github.io/ChefDrop/privacy.html" data-en="Privacy Policy" data-fr="Politique de confidentialité">Privacy Policy</a>
+    <a href="https://bazaqc.github.io/ChefDrop/terms.html" data-en="Terms of Use" data-fr="Conditions d'utilisation">Terms of Use</a>
+  </p>
+  <p style="margin-top:16px;">© 2025 ChefDrop. <span data-en="All rights reserved." data-fr="Tous droits réservés.">All rights reserved.</span></p>
+</footer>
+
+<script>
+  function setLang(lang) {
+    document.documentElement.lang = lang;
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+    document.querySelectorAll('[data-en]').forEach(el => {
+      const text = el.getAttribute('data-' + lang);
+      if (text) el.innerHTML = text;
+    });
+  }
+  // Auto-detect browser language
+  window.addEventListener('DOMContentLoaded', () => {
+    const lang = (navigator.language || '').toLowerCase();
+    if (lang.startsWith('fr')) setLang('fr');
+  });
+</script>
+</body>
+</html>
