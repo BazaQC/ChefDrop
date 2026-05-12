@@ -231,29 +231,30 @@
       gap: 10px; color: var(--muted); font-size: 0.8rem; text-align: center;
     }
 
-    /* GALLERY */
+    /*GALLERY */
     .gallery { background: var(--dark2); }
     .gallery-row {
-      display: flex; gap: 20px; overflow-x: auto;
-      padding: 40px 0 20px; scrollbar-width: none;
+      display: flex;
+      gap: 15px; /* Réduit l'espace pour que ça rentre mieux */
+      padding: 40px 0 20px;
+      justify-content: center; /* Centre le tout */
+      flex-wrap: nowrap; /* Force sur une ligne */
     }
-    .gallery-row::-webkit-scrollbar { display: none; }
     .gallery-item {
-      flex-shrink: 0; width: 220px; border-radius: 32px; overflow: hidden;
+      flex-shrink: 1; /* Permet aux images de rétrécir */
+      width: calc(16.66% - 15px); /* Divise l'espace en 6 (pour tes 6 photos) moins l'espace */
+      max-width: 200px; /* Taille max comme avant */
+      border-radius: 32px;
+      overflow: hidden;
       box-shadow: 0 20px 50px rgba(0,0,0,0.5);
       border: 1px solid rgba(255,255,255,0.06);
       transition: transform 0.3s;
     }
-    .gallery-item:hover { transform: scale(1.03); }
-    .gallery-item img { width: 100%; display: block; }
-    .gallery-placeholder {
-      width: 220px; height: 400px;
-      background: var(--dark3); border: 1px dashed rgba(212,168,67,0.25);
-      border-radius: 32px;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      color: var(--muted); font-size: 0.75rem;
-      gap: 8px; flex-shrink: 0; text-align: center; padding: 16px;
+    .gallery-item:hover { transform: scale(1.05); }
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
 
     /* PRICING */
@@ -355,31 +356,21 @@
 </nav>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="hero-badge" data-en="Available on the App Store" data-fr="Disponible sur l'App Store">Available on the App Store</div>
-  <h1 data-en="Your AI recipes,<br/><span>finally organized.</span>" data-fr="Tes recettes IA,<br/><span>enfin organisées.</span>">Your AI recipes,<br/><span>finally organized.</span></h1>
-  <p data-en="Paste any recipe from ChatGPT, Claude, or any AI — ChefDrop structures it, calculates your macros, and keeps your cookbook beautiful." data-fr="Colle n'importe quelle recette de ChatGPT, Claude ou tout autre IA — ChefDrop la structure, calcule tes macros et garde ton livre de cuisine impeccable.">Paste any recipe from ChatGPT, Claude, or any AI — ChefDrop structures it, calculates your macros, and keeps your cookbook beautiful.</p>
-  <div class="hero-buttons">
-    <a href="#download" class="btn-primary" data-en="Download Free" data-fr="Télécharger gratuitement">Download Free</a>
-    <a href="#features" class="btn-secondary" data-en="See how it works" data-fr="Voir comment ça marche">See how it works</a>
-  </div>
-  <div class="hero-screenshot">
+<div class="hero-screenshot">
     <div class="phone-wrap">
-      <!-- SCREENSHOT_HERO_LEFT : liste All Recipes -->
       <div class="phone side">
-        <div class="phone-placeholder">📱<br/><strong>images/Menu.png</strong><br/>All Recipes list</div>
+        <img src="images/Menu.png" alt="All Recipes list">
       </div>
-      <!-- SCREENSHOT_HERO_CENTER : détail recette + macros -->
+      
       <div class="phone center">
-        <div class="phone-placeholder center">📱<br/><strong>images/Recette.png</strong><br/>Recipe detail + macros</div>
+        <img src="images/Recette.png" alt="Recipe detail + macros">
       </div>
-      <!-- SCREENSHOT_HERO_RIGHT : filtres -->
+      
       <div class="phone side">
-        <div class="phone-placeholder">📱<br/><strong>images/Import.png</strong><br/>Filters screen</div>
+        <img src="images/Import.png" alt="Filters screen">
       </div>
     </div>
   </div>
-</section>
 
 <!-- HOW IT WORKS -->
 <section class="how" id="how">
