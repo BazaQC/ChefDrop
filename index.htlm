@@ -367,15 +367,15 @@
     <div class="phone-wrap">
       <!-- SCREENSHOT_HERO_LEFT : liste All Recipes -->
       <div class="phone side">
-        <div class="phone-placeholder">📱<br/><strong>SCREENSHOT_HERO_LEFT</strong><br/>All Recipes list</div>
+        <div class="phone-placeholder">📱<br/><strong>images/Menu.png</strong><br/>All Recipes list</div>
       </div>
       <!-- SCREENSHOT_HERO_CENTER : détail recette + macros -->
       <div class="phone center">
-        <div class="phone-placeholder center">📱<br/><strong>SCREENSHOT_HERO_CENTER</strong><br/>Recipe detail + macros</div>
+        <div class="phone-placeholder center">📱<br/><strong>images/Recette.png</strong><br/>Recipe detail + macros</div>
       </div>
       <!-- SCREENSHOT_HERO_RIGHT : filtres -->
       <div class="phone side">
-        <div class="phone-placeholder">📱<br/><strong>SCREENSHOT_HERO_RIGHT</strong><br/>Filters screen</div>
+        <div class="phone-placeholder">📱<br/><strong>images/Import.png</strong><br/>Filters screen</div>
       </div>
     </div>
   </div>
@@ -454,7 +454,7 @@
       <!-- SCREENSHOT_FEATURES : détail recette avec photo + macros -->
       <div class="features-screenshot">
         <div class="screenshot-placeholder">
-          📱<br/><strong>SCREENSHOT_FEATURES</strong><br/>Recipe detail<br/>(photo + macros visible)
+           <img src="images/Description.png" alt="ChefDrop Features" style="width: 100%; display: block;">
         </div>
       </div>
     </div>
@@ -466,13 +466,13 @@
   <div class="container">
     <p class="section-label" data-en="App screenshots" data-fr="Captures d'écran">App screenshots</p>
     <h2 class="section-title" data-en="Built for how<br/>you actually cook." data-fr="Conçu pour ta<br/>vraie façon de cuisiner.">Built for how<br/>you actually cook.</h2>
-    <div class="gallery-row">
-      <div class="gallery-item"><div class="gallery-placeholder">📱<br/><strong>SCREENSHOT_1</strong><br/>Recipe detail</div></div>
-      <div class="gallery-item"><div class="gallery-placeholder">📱<br/><strong>SCREENSHOT_2</strong><br/>All Recipes</div></div>
-      <div class="gallery-item"><div class="gallery-placeholder">📱<br/><strong>SCREENSHOT_3</strong><br/>Import screen</div></div>
-      <div class="gallery-item"><div class="gallery-placeholder">📱<br/><strong>SCREENSHOT_4</strong><br/>Filters</div></div>
-      <div class="gallery-item"><div class="gallery-placeholder">📱<br/><strong>SCREENSHOT_5</strong><br/>Favorites</div></div>
-    </div>
+<div class="gallery-row">
+  <div class="gallery-item"><img src="images/Recette.png" alt="Recette"></div>
+  <div class="gallery-item"><img src="images/Menu.png" alt="Menu"></div>
+  <div class="gallery-item"><img src="images/Import.png" alt="Import"></div>
+  <div class="gallery-item"><img src="images/SideMenu.png" alt="Side Menu"></div>
+  <div class="gallery-item"><img src="images/PaywallApple.png" alt="Paywall"></div>
+</div>
   </div>
 </section>
 
