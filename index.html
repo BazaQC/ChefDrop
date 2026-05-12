@@ -153,11 +153,12 @@
       transition: transform 0.4s ease;
     }
     .phone:hover { transform: translateY(-8px); }
-    .phone img { width: 200px; display: block; }
-    .phone.center img { width: 230px; }
-    .phone.side { opacity: 0.7; }
+    .phone img { width: 100%; display: block; }
+    .phone.side { width: 180px; opacity: 0.7; }
+    .phone.center { width: 220px; }
+    
     .phone-placeholder {
-      width: 200px; height: 380px;
+      width: 180px; height: 340px;
       background: var(--dark3); border-radius: 40px;
       border: 1px dashed rgba(212,168,67,0.3);
       display: flex; flex-direction: column;
@@ -165,7 +166,7 @@
       gap: 8px; color: var(--muted);
       font-size: 0.72rem; text-align: center; padding: 20px;
     }
-    .phone-placeholder.center { width: 230px; height: 430px; }
+    .phone-placeholder.center { width: 220px; height: 410px; }
 
     /* SECTIONS */
     section { padding: 100px 24px; }
@@ -227,23 +228,25 @@
       background: var(--dark3); border: 1px dashed rgba(212,168,67,0.3);
       border-radius: var(--radius);
       display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
+      align-items: center; 
+      justify-content: flex-start;
+      overflow: hidden;
       gap: 10px; color: var(--muted); font-size: 0.8rem; text-align: center;
     }
 
-    /*GALLERY */
+    /* GALLERY */
     .gallery { background: var(--dark2); }
     .gallery-row {
       display: flex;
-      gap: 15px; /* Réduit l'espace pour que ça rentre mieux */
+      gap: 15px;
       padding: 40px 0 20px;
-      justify-content: center; /* Centre le tout */
-      flex-wrap: nowrap; /* Force sur une ligne */
+      justify-content: center;
+      flex-wrap: nowrap;
     }
     .gallery-item {
-      flex-shrink: 1; /* Permet aux images de rétrécir */
-      width: calc(16.66% - 15px); /* Divise l'espace en 6 (pour tes 6 photos) moins l'espace */
-      max-width: 200px; /* Taille max comme avant */
+      flex-shrink: 1;
+      width: calc(16.66% - 15px);
+      max-width: 200px;
       border-radius: 32px;
       overflow: hidden;
       box-shadow: 0 20px 50px rgba(0,0,0,0.5);
@@ -343,7 +346,6 @@
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">ChefDrop</a>
   <div class="nav-right">
@@ -355,7 +357,6 @@
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-badge" data-en="Available on the App Store" data-fr="Disponible sur l'App Store">Available on the App Store</div>
   <h1 data-en="Your AI recipes,<br/><span>finally organized.</span>" data-fr="Tes recettes IA,<br/><span>enfin organisées.</span>">Your AI recipes,<br/><span>finally organized.</span></h1>
@@ -369,21 +370,20 @@
   <div class="hero-screenshot">
     <div class="phone-wrap">
       <div class="phone side">
-        <img src="images/Menu.png" alt="Menu" style="width: 100%; display: block;">
+        <img src="images/Menu.png" alt="Menu">
       </div>
 
       <div class="phone center">
-        <img src="images/Recette.png" alt="Recette" style="width: 100%; display: block;">
+        <img src="images/Recette.png" alt="Recette">
       </div>
 
       <div class="phone side">
-        <img src="images/Import.png" alt="Import" style="width: 100%; display: block;">
+        <img src="images/Import.png" alt="Import">
       </div>
     </div>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
 <section class="how" id="how">
   <div class="container">
     <p class="section-label" data-en="How it works" data-fr="Comment ça marche">How it works</p>
@@ -408,7 +408,6 @@
   </div>
 </section>
 
-<!-- FEATURES -->
 <section id="features">
   <div class="container">
     <div class="features-grid">
@@ -453,32 +452,30 @@
           </div>
         </div>
       </div>
-      <!-- SCREENSHOT_FEATURES : détail recette avec photo + macros -->
+      
       <div class="features-screenshot">
         <div class="screenshot-placeholder">
-           <img src="images/Recette.png" alt="ChefDrop Features" style="width: 100%; display: block;">
+           <img src="images/Recette.png" alt="ChefDrop Features">
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- GALLERY -->
 <section class="gallery" id="gallery">
   <div class="container">
     <p class="section-label" data-en="App screenshots" data-fr="Captures d'écran">App screenshots</p>
     <h2 class="section-title" data-en="Built for how<br/>you actually cook." data-fr="Conçu pour ta<br/>vraie façon de cuisiner.">Built for how<br/>you actually cook.</h2>
-<div class="gallery-row">
-  <div class="gallery-item"><img src="images/Recette.png" alt="Recette"></div>
-  <div class="gallery-item"><img src="images/Menu.png" alt="Menu"></div>
-  <div class="gallery-item"><img src="images/Import.png" alt="Import"></div>
-  <div class="gallery-item"><img src="images/SideMenu.png" alt="Side Menu"></div>
-  <div class="gallery-item"><img src="images/PaywallApple.png" alt="Paywall"></div>
-</div>
+    <div class="gallery-row">
+      <div class="gallery-item"><img src="images/Recette.png" alt="Recette"></div>
+      <div class="gallery-item"><img src="images/Menu.png" alt="Menu"></div>
+      <div class="gallery-item"><img src="images/Import.png" alt="Import"></div>
+      <div class="gallery-item"><img src="images/SideMenu.png" alt="Side Menu"></div>
+      <div class="gallery-item"><img src="images/PaywallApple.png" alt="Paywall"></div>
+    </div>
   </div>
 </section>
 
-<!-- PRICING -->
 <section id="pricing">
   <div class="container">
     <p class="section-label" data-en="Pricing" data-fr="Tarifs">Pricing</p>
@@ -534,12 +531,10 @@
   </div>
 </section>
 
-<!-- CTA -->
 <section class="cta-section" id="download">
   <div class="container">
     <h2 data-en="Ready to cook smarter?" data-fr="Prêt à cuisiner plus intelligemment ?">Ready to cook smarter?</h2>
     <p data-en="Download ChefDrop free. Your first 5 recipes are on us." data-fr="Télécharge ChefDrop gratuitement. Tes 5 premières recettes sont offertes.">Download ChefDrop free. Your first 5 recipes are on us.</p>
-    <!-- Remplace le href par ton lien App Store -->
     <a href="https://apps.apple.com" class="app-store-btn" target="_blank">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
       <span data-en="Download on the App Store" data-fr="Télécharger sur l'App Store">Download on the App Store</span>
@@ -547,7 +542,6 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <p>
     <a href="https://bazaqc.github.io/ChefDrop/support.html" data-en="Support" data-fr="Support">Support</a>
@@ -567,7 +561,6 @@
       if (text) el.innerHTML = text;
     });
   }
-  // Auto-detect browser language
   window.addEventListener('DOMContentLoaded', () => {
     const lang = (navigator.language || '').toLowerCase();
     if (lang.startsWith('fr')) setLang('fr');
