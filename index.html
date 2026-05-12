@@ -219,13 +219,13 @@
     .feature-item h4 { font-size: 0.95rem; font-weight: 500; margin-bottom: 4px; }
     .feature-item p { color: var(--muted); font-size: 0.875rem; line-height: 1.6; }
     
-    .features-screenshot {
-      border-radius: var(--radius); overflow: hidden;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.06);
-      align-self: flex-start;
-      margin-top: 110px; /* Positionne parfaitement l'image entre le haut et le centre */
-    }
+.features-screenshot img {
+  width: 100%;
+  display: block;
+  object-fit: cover;          /* permet de recadrer */
+  object-position: 50% 30%;   /* entre le top et le centre */
+}
+
     .features-screenshot img { width: 100%; display: block; }
     .screenshot-placeholder {
       width: 100%; aspect-ratio: 9/16; max-height: 500px;
